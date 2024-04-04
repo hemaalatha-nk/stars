@@ -159,7 +159,7 @@ public class PlotStars : MonoBehaviour
         string[] data = ConsttextAssetData.text.Split(new string[] { "\n" }, StringSplitOptions.None);
         for (int i = 0; i < data.Length; i++)
         {
-            Debug.Log("data " + data[i]);
+            //Debug.Log("data " + data[i]);
         }
 
     }
@@ -180,16 +180,16 @@ public class PlotStars : MonoBehaviour
             List<Vector3> constellationVectorData = new List<Vector3>();
             for (int j = 3; j < constellation.Count; j++)
             {
-                Debug.Log(constellation[j] + " " + starsData[0][0] + " " + ((int)Math.Floor(float.Parse(starsData[0][0]))).ToString());
+                //Debug.Log(constellation[j] + " " + starsData[0][0] + " " + ((int)Math.Floor(float.Parse(starsData[0][0]))).ToString());
                 var starVectorIndex = starsData.FindIndex(x => ((int)Math.Floor(float.Parse(x[0]))).ToString() == constellation[j].ToString());
-                Debug.Log(starVectorIndex);
+                //Debug.Log(starVectorIndex);
                 if (starVectorIndex > 1)
                 {
-                    Debug.Log(starsData[starVectorIndex][0]);
+                    //Debug.Log(starsData[starVectorIndex][0]);
                     constellationVectorData.Add(new Vector3((float.Parse(starsData[starVectorIndex][1]) * 1.01236f), (float.Parse(starsData[starVectorIndex][2]) * 1.01236f), (float.Parse(starsData[starVectorIndex][3]) * 1.01236f)));
                 }
             }
-            Debug.Log(constellationVectorData.Count);
+            //Debug.Log(constellationVectorData.Count);
             if (constellationVectorData.Count != 0)
                 constellationsVectorData.Add(constellationVectorData);
 
@@ -202,7 +202,7 @@ public class PlotStars : MonoBehaviour
     {
         //float distanceToCamera = Vector3.Distance(transform.position, mainCamera.transform.position);
         //float thickness = 0.01f + (distanceToCamera * 0.01f);
-        Debug.Log("stars.Count " + stars.Count);
+        //Debug.Log("stars.Count " + stars.Count);
 
         if (stars.Count < 2) return; // A constellation needs at least two stars to form a line
 
@@ -228,10 +228,10 @@ public class PlotStars : MonoBehaviour
 
     {
         ClearAllLines();
-        Debug.Log("constellationName: " + constellationName);
+        //Debug.Log("constellationName: " + constellationName);
         constellationsData.AddRange(GetConstellations(constellationName));
         GetVectorOfConstellations();
-        Debug.Log("constellationsVectorData: " + constellationsVectorData.Count);
+        //Debug.Log("constellationsVectorData: " + constellationsVectorData.Count);
         foreach (var constellation in constellationsVectorData)
         {
             DrawConstellation(constellation);
