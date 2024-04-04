@@ -1,0 +1,59 @@
+﻿<Properties>
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/module-omicron/Scripts/PlotStars.cs">
+    <Files>
+      <File FileName="Assets/module-omicron/Scripts/ploting_stars.cs" />
+      <File FileName="Assets/module-omicron/Scripts/PlotStars.cs" Line="127" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="omicron-unity" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
+                <Node name="module-omicron" expanded="True">
+                  <Node name="CAVE2" expanded="True">
+                    <Node name="Examples" expanded="True">
+                      <Node name="CAVESimulator" expanded="True">
+                        <Node name="Scripts" expanded="True" />
+                      </Node>
+                    </Node>
+                    <Node name="Networking" expanded="True">
+                      <Node name="Scripts" expanded="True">
+                        <Node name="Legacy" expanded="True" />
+                      </Node>
+                    </Node>
+                    <Node name="RemoteControl" expanded="True" />
+                    <Node name="Scripts" expanded="True">
+                      <Node name="Examples" expanded="True" />
+                      <Node name="Managers" expanded="True" />
+                      <Node name="Navigation" expanded="True" />
+                      <Node name="UI" expanded="True">
+                        <Node name="Omegalib-Style Menu" expanded="True" />
+                      </Node>
+                      <Node name="Updaters" expanded="True" />
+                      <Node name="Util" expanded="True" />
+                    </Node>
+                    <Node name="Tutorial" expanded="True">
+                      <Node name="Scripts" expanded="True" />
+                    </Node>
+                  </Node>
+                  <Node name="Scripts" expanded="True">
+                    <Node name="Util" expanded="True" />
+                    <Node name="PlotStars.cs" selected="True" />
+                  </Node>
+                </Node>
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
+</Properties>
