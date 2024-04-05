@@ -15,10 +15,16 @@ public class PlotStars : MonoBehaviour
     public TextAsset textAssetData;
 
     public TextAsset ConsttextAssetData;
+    public TextAsset ConsttextAssetData2;
+    public TextAsset ConsttextAssetData3;
+    public TextAsset ConsttextAssetData4;
+    public TextAsset ConsttextAssetData5;
+    
 
     public GameObject quadPrefab;
 
-    //public Camera mainCamera;
+    public Camera mainCamera;
+    //public GameObject quadPrefabsContainer;
 
     public GameObject lineRendererPrefab;
     //public ParticleSystem laserParticleSystem; // Assign this in the inspector
@@ -26,8 +32,20 @@ public class PlotStars : MonoBehaviour
 
     List<string[]> starsData = new List<string[]>();
     List<Vector3> starPositions = new List<Vector3>();
-    List<string> constellationsData = new List<string>();
-    List<List<Vector3>> constellationsVectorData = new List<List<Vector3>>();
+    //List<string> constellationsData = new List<string>();
+
+    List<List<Vector3>> constellationsVectorDataVelocity = new List<List<Vector3>>();
+
+
+    List<List<Vector3>> constellationsVectorData1 = new List<List<Vector3>>();
+    List<List<Vector3>> constellationsVectorData2 = new List<List<Vector3>>();
+    List<List<Vector3>> constellationsVectorData3 = new List<List<Vector3>>();
+    List<List<Vector3>> constellationsVectorData4 = new List<List<Vector3>>();
+    List<List<Vector3>> constellationsVectorData5 = new List<List<Vector3>>();
+    List<LineRenderer> lr = new List<LineRenderer>();
+
+    public List<GameObject> starsInConstellation = new List<GameObject>();
+
 
     public float TimeScale = 10.0f;
 
@@ -38,13 +56,15 @@ public class PlotStars : MonoBehaviour
         GenerateStars();
         PlotingStars();
         //getconst();
+        LoadConstellationsData();
         DrawConstellations("modern");
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //updateVelocity();
+        //DrawConstellations("modern");
     }
 
     void GenerateStars()
@@ -60,10 +80,35 @@ public class PlotStars : MonoBehaviour
 
     }
 
+    void updateVelocity()
+    {
+        //transform.position += velocity * Time.deltaTime;
+        if (lr.Count >= 0)
+        {
+            for (int i = 0; i < lr.Count; i++)
+            {
+                Vector3[] positions = new Vector3[lr[i].positionCount];
+                lr[i].GetPositions(positions);
+                for (int j = 0; j < positions.Length; j++)
+                {
+                    // Example modification: raising all points along the y-axis
+                    positions[j] += constellationsVectorDataVelocity[i][j] * (Time.deltaTime / 100f);
+                }
+
+                // Apply the modified positions back to the LineRenderer
+                lr[i].SetPositions(positions);
+
+                //if (starsInConstellation[i] != null)
+                //    lr[i].SetPosition(i, starsInConstellation[i].transform.position);
+            }
+
+        }
+    }
+
     Color getColor(string[] spectral_type, float brightness)
     {
         char spectral_color = spectral_type[0][0];
-        Debug.Log(brightness + " spectral_type: " + spectral_color);
+        //Debug.Log(brightness + " spectral_type: " + spectral_color);
         Color[] col = new Color[9];
         col[0] = IntColour(0x5c, 0x7c, 0xff, brightness); // O1
         col[1] = IntColour(0x5d, 0x7e, 0xff, brightness); // B0.5
@@ -119,9 +164,11 @@ public class PlotStars : MonoBehaviour
     {
         return new Color(r / 255f, g / 255f, b / 255f, brightness);
     }
+
     void PlotingStars()
     {
         for (int i = 0; i < starPositions.Count; i++)
+           
         {
             GameObject star = Instantiate(quadPrefab, starPositions[i], Quaternion.identity);
             Renderer renderer = star.GetComponent<Renderer>();
@@ -134,11 +181,16 @@ public class PlotStars : MonoBehaviour
             {
                 propBlock.SetColor("_TintColor", getColor(starsData[i][8].Split(' '), float.Parse(starsData[i][7])));
             }
-            // Apply the property block back to the renderer
+            //StarMover mover = star.AddComponent<StarMover>();
+            //mover.mainCamera=mainCamera;
+            //// Apply the property block back to the renderer
+            //mover.velocity = new Vector3((float.Parse(starsData[i][4]) * 1.01236f), (float.Parse(starsData[i][5]) * 1.01236f), (float.Parse(starsData[i][6]) * 1.01236f)) * Time.deltaTime;
+            //transform.position += new Vector3((float.Parse(starsData[i][4]) * 1.01236f), (float.Parse(starsData[i][5]) * 1.01236f), (float.Parse(starsData[i][6]) * 1.01236f)) * Time.deltaTime;
             renderer.SetPropertyBlock(propBlock);
 
 
         }
+        
 
 
     }
@@ -150,7 +202,7 @@ public class PlotStars : MonoBehaviour
         foreach (LineRenderer lr in allLineRenderers)
         {
             //lr.positionCount = 0; // Clears the LineRenderer
-            Destroy(lr);
+            Destroy(lr.gameObject);
         }
     }
 
@@ -164,37 +216,48 @@ public class PlotStars : MonoBehaviour
 
     }
 
-    String[] GetConstellations(string constellationName)
+    String[] GetConstellations(TextAsset ConsttextAssetData)
     {
         string[] data = ConsttextAssetData.text.Split(new string[] { "\n" }, StringSplitOptions.None);
-        //Debug.Log(result[0]);
+        Debug.Log("data.Length "+data.Length);
         return data;
 
     }
 
-    void GetVectorOfConstellations()
+    List<List<Vector3>> GetVectorOfConstellations(List<string> constellationsData)
     {
+        List<List<Vector3>> constellationsVectorData = new List<List<Vector3>>();
+        Debug.Log("stars: ");
         for (int i = 0; i < constellationsData.Count; i++)
         {
+            Debug.Log("stars: " + constellationsData[i] + " " + starsData[0][0] + " " + ((int)Math.Floor(float.Parse(starsData[0][0]))).ToString());
+            List<Vector3> constellationVectorDataV = new List<Vector3>();
+
             List<string> constellation = new List<string>(constellationsData[i].Split(' '));
             List<Vector3> constellationVectorData = new List<Vector3>();
+
             for (int j = 3; j < constellation.Count; j++)
             {
-                //Debug.Log(constellation[j] + " " + starsData[0][0] + " " + ((int)Math.Floor(float.Parse(starsData[0][0]))).ToString());
+                Debug.Log("stars: "+constellation[j] + " " + starsData[0][0] + " " + ((int)Math.Floor(float.Parse(starsData[0][0]))).ToString());
                 var starVectorIndex = starsData.FindIndex(x => ((int)Math.Floor(float.Parse(x[0]))).ToString() == constellation[j].ToString());
                 //Debug.Log(starVectorIndex);
                 if (starVectorIndex > 1)
                 {
-                    //Debug.Log(starsData[starVectorIndex][0]);
+                    Debug.Log("stars: "+starsData[starVectorIndex][0]);
+                    constellationVectorDataV.Add(new Vector3((float.Parse(starsData[i][4]) * 1.01236f), (float.Parse(starsData[i][5]) * 1.01236f), (float.Parse(starsData[i][6]) * 1.01236f)));
                     constellationVectorData.Add(new Vector3((float.Parse(starsData[starVectorIndex][1]) * 1.01236f), (float.Parse(starsData[starVectorIndex][2]) * 1.01236f), (float.Parse(starsData[starVectorIndex][3]) * 1.01236f)));
                 }
             }
             //Debug.Log(constellationVectorData.Count);
             if (constellationVectorData.Count != 0)
+                constellationsVectorDataVelocity.Add(constellationVectorDataV);
                 constellationsVectorData.Add(constellationVectorData);
 
             //var result = starsData.Find(x => x[0] == constellationsList[0]);
         }
+
+        
+        return constellationsVectorData;
     }
 
 
@@ -210,9 +273,9 @@ public class PlotStars : MonoBehaviour
 
         lineRenderer.positionCount = stars.Count;
         lineRenderer.startWidth = lineRenderer.endWidth = 0.1f;
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
-
+        //lineRenderer.startColor = Color.red;
+        //lineRenderer.endColor = Color.red;
+       
 
         for (int i = 0; i < stars.Count; i = i + 1)
         {
@@ -220,21 +283,166 @@ public class PlotStars : MonoBehaviour
             Debug.Log("stars[i] " + stars[i]);
             lineRenderer.SetPosition(i, stars[i]);
         }
+
+        lr.Add(lineRenderer);
+        //LineRenderer lineRendererComponent = lineRenderer.GetComponent<LineRenderer>();
+        //AdjustLinePositions lines = lineRendererComponent.AddComponent<AdjustLinePositions>();
+        //// Apply the property block back to the renderer
+        //mover.velocity = new Vector3((float.Parse(starsData[i][4]) * 1.01236f), (float.Parse(starsData[i][5]) * 1.01236f), (float.Parse(starsData[i][6]) * 1.01236f)) * Time.deltaTime;
+
+    }
+
+    void LoadConstellationsData()
+    {
+        
+        constellationsVectorData1 = GetVectorOfConstellations(ll(ConsttextAssetData));
+        constellationsVectorData2 = GetVectorOfConstellations(ll(ConsttextAssetData2));
+        constellationsVectorData3 = GetVectorOfConstellations(ll(ConsttextAssetData3));
+        constellationsVectorData4 = GetVectorOfConstellations(ll(ConsttextAssetData4));
+        constellationsVectorData5 = GetVectorOfConstellations(ll(ConsttextAssetData5));
+
+    }
+    List<string> ll(TextAsset ConsttextAssetData)
+    {
+        List<string> constellationsData = new List<string>();
+
+        constellationsData.AddRange(GetConstellations(ConsttextAssetData));
+        return constellationsData;
+
+       
     }
 
 
     public void DrawConstellations(string constellationName)
-
-
-    {
+{
         ClearAllLines();
-        //Debug.Log("constellationName: " + constellationName);
-        constellationsData.AddRange(GetConstellations(constellationName));
-        GetVectorOfConstellations();
-        //Debug.Log("constellationsVectorData: " + constellationsVectorData.Count);
-        foreach (var constellation in constellationsVectorData)
+
+        switch (constellationName)
         {
-            DrawConstellation(constellation);
+            case "modern":
+                // Code block to execute when the expression matches value1
+                foreach (var constellation in constellationsVectorData1)
+                {
+                    DrawConstellation(constellation);
+                }
+                break;
+            case "indian":
+                // Code block to execute when the expression matches value2
+                foreach (var constellation in constellationsVectorData2)
+                {
+                    DrawConstellation(constellation);
+                }
+                break;
+            case "chinese":
+                // Code block to execute when the expression matches value2
+                foreach (var constellation in constellationsVectorData3)
+                {
+                    DrawConstellation(constellation);
+                }
+                break;
+            case "egyptian":
+                // Code block to execute when the expression matches value2
+                foreach (var constellation in constellationsVectorData4)
+                {
+                    DrawConstellation(constellation);
+                }
+                break;
+            case "maori":
+                // Code block to execute when the expression matches value2
+                foreach (var constellation in constellationsVectorData5)
+                {
+                    DrawConstellation(constellation);
+                }
+                break;
+            // You can have any number of case statements
+            default:
+                foreach (var constellation in constellationsVectorData1)
+                {
+                    DrawConstellation(constellation);
+                }
+                // Code block to execute if none of the above cases are matched
+                break;
+        }
+
+
+        //ClearAllLines();
+        //Debug.Log("constellationName: " + constellationName);
+        //constellationsData.AddRange(GetConstellations(constellationName));
+        //GetVectorOfConstellations(constellationsData);
+        ////Debug.Log("constellationsVectorData: " + constellationsVectorData.Count);
+        //foreach (var constellation in constellationsVectorData)
+        //{
+        //    DrawConstellation(constellation);
+        //}
+    }
+    public void exodatadisplay()
+    {
+        GameObject[] instances = GameObject.FindGameObjectsWithTag("QuadPrefab");
+        foreach (var instance in instances)
+        {
+            Destroy(instance);
+        }
+
+        for (int i = 0; i < starPositions.Count; i++)
+        {
+            //GameObject star = Instantiate(quadPrefab, starPositions[i], Quaternion.identity);
+            //Renderer renderer = star.GetComponent<Renderer>();
+
+            //MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+            //renderer.GetPropertyBlock(propBlock);
+
+
+
+            // Set the tint color on the property block
+            //if (starsData[i][9] != "")
+            //{
+                GameObject star = Instantiate(quadPrefab, starPositions[i], Quaternion.identity);
+                Renderer renderer = star.GetComponent<Renderer>();
+
+                MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+                renderer.GetPropertyBlock(propBlock);
+                Debug.Log("no_planet: " + starsData[i][9]);
+                propBlock.SetColor("_TintColor", exodata(starsData[i][9]));
+                renderer.SetPropertyBlock(propBlock);
+            //}
+            // Apply the property block back to the renderer
+            //renderer.SetPropertyBlock(propBlock);
+
+
         }
     }
+
+    Color exodata(string no_planet)
+    {
+
+        Debug.Log("no_planet: "+no_planet);
+        switch (no_planet)
+        {
+            case "1.0":
+                // Code block to execute when the expression matches value1
+                return Color.blue;
+             
+            case "2.0":
+                // Code block to execute when the expression matches value2
+                return Color.green;
+        
+            case "3.0":
+                // Code block to execute when the expression matches value2
+                return Color.magenta;
+            case "4.0":
+                // Code block to execute when the expression matches value2
+                    return Color.cyan;
+            case "5.0":
+                // Code block to execute when the expression matches value2
+                return Color.yellow;
+            // You can have any number of case statements
+            case "6.0":
+                // Code block to execute when the expression matches value2
+                return Color.red;
+
+            default:
+                return Color.white;
+        }
+    }
+
 }
