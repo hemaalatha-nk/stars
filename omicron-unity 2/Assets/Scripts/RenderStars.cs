@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static omicron.EventBase;
-using static RenderStars;
+using static System.Net.Mime.MediaTypeNames;
 
 public class RenderStars : MonoBehaviour
 {
@@ -16,12 +14,11 @@ public class RenderStars : MonoBehaviour
     public Transform userOrigin; 
     public Transform playerController;
 
-    public float maxDistance = 50f; 
+    public float maxDistance = 100f; 
     private float positionScale = 1.0f;
 
     public GameObject starPrefab;
-
-    public Slider positionScaleSlider; // Reference to the Slider for position scale
+    public Slider positionScaleSlider;
 
     // List to store star data
     public List<StarData> starDataset = new List<StarData>();
@@ -45,8 +42,8 @@ public class RenderStars : MonoBehaviour
     private Vector3 originalPosition;
     private Quaternion originalOrientation;
     public float resetDuration = 5.0f; // Duration of the movement
-                                       //public float distanceThreshold = 1.0f; // Distance threshold to trigger the function
-    public TMP_Text text;
+    //public float distanceThreshold = 1.0f; // Distance threshold to trigger the function
+
     //public Toggle stellarCheckbox;
     //public Toggle knownPlanetsCheckbox;
 
@@ -56,7 +53,7 @@ public class RenderStars : MonoBehaviour
     private int numVelocityCycles = 0;
     public bool activateMoveToAndromeda = false;
 
-    float distanceInLightYears = 0;
+
 
 
     public struct StarData
@@ -76,16 +73,15 @@ public class RenderStars : MonoBehaviour
 
 
         isStarted = true;
-        
+
+        positionScaleSlider.onValueChanged.AddListener(delegate { SetPositionScale(positionScaleSlider.value); });
 
         IntitialStars();
-      
+
         // Store the initial position
         initialPosition = userOrigin.transform.position;
         originalPosition = playerController.transform.position;
         originalOrientation = playerController.transform.rotation;
-        positionScaleSlider.onValueChanged.AddListener(delegate { SetPositionScale(positionScaleSlider.value); });
-
 
         // Raise the event to signal that stars are loaded
         if (StarsLoaded != null)
@@ -93,9 +89,8 @@ public class RenderStars : MonoBehaviour
             StarsLoaded.Invoke();
         }
 
-        //Invoke("Starsvelocity", 2f);
+        
     }
-
     public void SetPositionScale(float scale)
     {
         positionScale = scale;
@@ -111,7 +106,7 @@ public class RenderStars : MonoBehaviour
                     {
 
 
-                        loadedStars[star].transform.position += (new Vector3(starData.vx, starData.vy, starData.vz) * Time.deltaTime);
+                        loadedStars[star].transform.position += (new Vector3(starData.vx, starData.vy, starData.vz) * positionScale);
                     }
 
                 }
@@ -119,19 +114,18 @@ public class RenderStars : MonoBehaviour
         }
     }
 
-    //public void foreach (var star in loadedStars.Keys)
 
     public void Starvelocity(string flag)
     {
-         distanceInLightYears = distanceInLightYears + Time.deltaTime / 600;
-        text.text = distanceInLightYears.ToString("F2") + " Light Years";
-        Debug.Log("isStartedflag: "+flag);
-      
-            if (flag == "reset")
-        {
-            //text.text="0";
-            distanceInLightYears = 0;
-}
+        //distanceInLightYears = distanceInLightYears + Time.deltaTime / 600;
+        //text.text = distanceInLightYears.ToString("F2") + " Light Years";
+        //Debug.Log("isStartedflag: " + flag);
+
+        //if (flag == "reset")
+        //{
+        //    //text.text="0";
+        //    distanceInLightYears = 0;
+        //}
         foreach (var star in loadedStars.Keys)
         {
             foreach (var starData in renderedStars)
@@ -142,21 +136,22 @@ public class RenderStars : MonoBehaviour
                     //loadedStars[star].Move();
                     if (loadedStars[star].activeSelf)
                     {
-                        NewStar starscript = loadedStars[star].GetComponent<NewStar>();
+                        MoveSta starscript = loadedStars[star].GetComponent<MoveSta>();
                         starscript.flag = flag;
-                        
+
                         //loadedStars[star].transform.position += (new Vector3(starData.vx, starData.vy, starData.vz) * Time.deltaTime);
                     }
-                   
+
                 }
             }
         }
-        }
+    }
+
 
 
     public void exodata()
     {
-        ReNewStarrs();
+
         foreach (var star in loadedStars.Keys)
         {
             foreach (var starData in renderedStars)
@@ -164,7 +159,7 @@ public class RenderStars : MonoBehaviour
                 if (starData.hip == star)
                 {
                     //loadedStars[starHip].transform.position
-                        Renderer renderer = loadedStars[star].GetComponent<Renderer>();
+                    Renderer renderer = loadedStars[star].GetComponent<Renderer>();
                     MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
                     renderer.GetPropertyBlock(propBlock);
                     if (renderer != null)
@@ -175,58 +170,13 @@ public class RenderStars : MonoBehaviour
 
                 }
             }
-                    
+
         }
-
-        //foreach (Dictionary<int, GameObject> star in loadedStars)
-        //{
-
-        //    Renderer renderer = renderedStar.GetComponent<Renderer>();
-        //    MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-        //    renderer.GetPropertyBlock(propBlock);
-        //    if (renderer != null)
-        //    {
-        //        propBlock.SetColor("_TintColor", exodata(starData.numExo));
-        //    }
-        //    renderer.SetPropertyBlock(propBlock);
-
-
-        //}
-
-
-
-        //foreach (var starData in starDataset)
-        //{
-        //    Vector3 starPosition = new Vector3(starData.x0 * positionScale, starData.y0 * positionScale, starData.z0 * positionScale);
-        //    float distanceToOrigin = Vector3.Distance(userOrigin.position, starPosition);
-
-        //    if (distanceToOrigin <= maxDistance * positionScale)
-        //    {
-        
-        //        GameObject NewStar = Instantiate(starPrefab, starPosition, Quaternion.identity);
-
-        //        NewStar mover = NewStar.AddComponent<NewStar>();
-        //        mover.velocity = new Vector3(starData.vx * 1.01236f, starData.vy * 1.01236f, starData.vz * 1.01236f);
-
-        //        //Color starColor = exodata(starData.numExo);
-        //        Renderer renderer = NewStar.GetComponent<Renderer>();
-        //        MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-        //        renderer.GetPropertyBlock(propBlock);
-        //        if (renderer != null)
-        //        {
-        //            propBlock.SetColor("_TintColor", exodata(starData.numExo));
-        //        }
-        //        renderer.SetPropertyBlock(propBlock);
-
-        //        renderedStars.Add(starData);
-        //        loadedStars.Add(starData.hip, NewStar);
-        //    }
-        //}
     }
 
 
 
-    void Update()
+        void Update()
     {
         
         if (isStarted)
@@ -240,7 +190,7 @@ public class RenderStars : MonoBehaviour
                     lastUpdateTime = Time.time; // Update the last update time
                 }
             }
-            //Starsvelocity();
+
         }
     }
 
@@ -259,25 +209,25 @@ public class RenderStars : MonoBehaviour
         }
         return shouldUpdate;
     }
-    
+
     public void IntitialStars()
     {
        
-        ReNewStarrs();
+        RemoveStars();
 
      
         foreach (var starData in starDataset)
         {
             Vector3 starPosition = new Vector3(starData.x0 * positionScale, starData.y0 * positionScale, starData.z0 * positionScale);
             float distanceToOrigin = Vector3.Distance(userOrigin.position, starPosition);
-           
 
-                if (distanceToOrigin <= maxDistance * positionScale)
+
+            if (distanceToOrigin <= maxDistance * positionScale)
             {
                 GameObject star = Instantiate(starPrefab, starPosition, Quaternion.identity);
-                NewStar mover = star.AddComponent<NewStar>();
-                mover.velocity = new Vector3(starData.vx , starData.vy , starData.vz ) * 1.02269e-6f;
-                mover.cameraTransform = userOrigin;
+                MoveSta mover = star.AddComponent<MoveSta>();
+                mover.velocity = new Vector3(starData.vx * 1.01236f, starData.vy * 1.01236f, starData.vz * 1.01236f);
+
                 //Color starColor = getColor(starData.spect, starData.absmag);
                 Renderer renderer = star.GetComponent<Renderer>();
                 MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
@@ -292,8 +242,6 @@ public class RenderStars : MonoBehaviour
                 loadedStars.Add(starData.hip, star);
             }
         }
-
-        Debug.Log("loadedStars "+loadedStars.Count);
 
     }
 
@@ -436,7 +384,7 @@ public class RenderStars : MonoBehaviour
     //}
 
 
-    void ReNewStarrs()
+    void RemoveStars()
     {
         renderedStars.Clear();
         foreach (var star in loadedStars.Values)

@@ -1,33 +1,30 @@
-﻿<Properties StartupConfiguration="{6FA5972E-930D-1351-04F3-56CEA7E6F818}|Unit Tests">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+﻿<Properties>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MoveSta.cs">
     <Files>
       <File FileName="Assets/ObjectMover.cs" />
-      <File FileName="Assets/Scripts/MovePlayer.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/MovePlayer.cs" />
       <File FileName="Assets/module-omicron/Continuum/Scripts/StandaloneDisplayManager.cs" />
       <File FileName="Assets/Scripts/LoadStars.cs" />
-      <File FileName="Assets/Scripts/RenderStars.cs" Line="266" Column="11" />
+      <File FileName="Assets/Scripts/RenderStars.cs" Line="1" Column="1" />
       <File FileName="Assets/DistanceFromSolHandler.cs" />
-      <File FileName="Assets/Scripts/MoveSta.cs" Line="36" Column="34" />
+      <File FileName="Assets/Scripts/MoveSta.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/DrawContellation.cs" />
-      <File FileName="Assets/Scripts/GetConstellationData.cs" Line="54" Column="33" />
-      <File FileName="Assets/Scripts/NewStar.cs" Line="18" Column="14" />
-      <File FileName="Assets/Scripts/Newlol.cs" Line="31" Column="30" />
-      <File FileName="Assets/Scripts/NewStar2.cs" Line="5" Column="22" />
+      <File FileName="Assets/Scripts/GetConstellationData.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
-          <Node name="omicron-unity 2">
-            <Node name="Assembly-CSharp">
-              <Node name="Assets">
+          <Node name="omicron-unity 2" expanded="True">
+            <Node name="Assembly-CSharp" expanded="True">
+              <Node name="Assets" expanded="True">
                 <Node name="module-omicron" expanded="True">
                   <Node name="Continuum" expanded="True">
                     <Node name="Scripts" expanded="True" />
                   </Node>
                 </Node>
-                <Node name="Scripts">
+                <Node name="Scripts" expanded="True">
                   <Node name="MoveSta.cs" selected="True" />
                 </Node>
               </Node>
@@ -37,9 +34,9 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

@@ -4,7 +4,7 @@
 
 using System;
 using System.Collections.Generic;
-
+using TMPro;
 using UnityEngine;
 
 public class GetConstellationData : MonoBehaviour
@@ -43,7 +43,8 @@ public class GetConstellationData : MonoBehaviour
     public string SelectedConstellationDataset { get; private set; }
 
     public DrawContellation drawContellation;
-
+    public TMP_Text text;
+    public TMP_Text text2;
 
     void Start()
     {
@@ -51,9 +52,9 @@ public class GetConstellationData : MonoBehaviour
         datasetMap.Add("modern", (GetLines(modernConstellationFile)));
         datasetMap.Add("arabic", (GetLines(arabicConstellationFile)));
         datasetMap.Add("indian", (GetLines(indianConstellationFile)));
-        datasetMap.Add("egpytian", (GetLines(egyptianConstellationFile)));
+        datasetMap.Add("egyptian", (GetLines(egyptianConstellationFile)));
         datasetMap.Add("chinese", (GetLines(chineseConstellationFile)));
-        SelectedConstellationDataset = "moden";
+
 
         buttonConst("modern");
 
@@ -82,7 +83,6 @@ public class GetConstellationData : MonoBehaviour
 
 
         SelectedConstellationDataset = constellationName;
-        Debug.Log("datasetMap "+ SelectedConstellationDataset);
         drawContellation.SendMessage("UpdateConstellations");
 
 
@@ -93,6 +93,23 @@ public class GetConstellationData : MonoBehaviour
 
     public string[] GetConstellationFile()
     {
+
+
+        if (SelectedConstellationDataset == "modern")
+        {
+             text.enabled = true;
+            text2.enabled = false;
+        }
+        else if(SelectedConstellationDataset == "egyptian")
+        {
+            text2.enabled = true;
+            text.enabled = false;
+        }
+        else
+        {
+            text2.enabled = false;
+            text.enabled = false;
+        }
         string[] dataset;
         if (datasetMap.TryGetValue(SelectedConstellationDataset, out dataset))
         {
