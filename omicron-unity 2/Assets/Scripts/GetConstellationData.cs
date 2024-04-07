@@ -51,7 +51,7 @@ public class GetConstellationData : MonoBehaviour
         datasetMap.Add("modern", (GetLines(modernConstellationFile)));
         datasetMap.Add("arabic", (GetLines(arabicConstellationFile)));
         datasetMap.Add("indian", (GetLines(indianConstellationFile)));
-        datasetMap.Add("egyptian", (GetLines(egyptianConstellationFile)));
+        datasetMap.Add("egpytian", (GetLines(egyptianConstellationFile)));
         datasetMap.Add("chinese", (GetLines(chineseConstellationFile)));
         SelectedConstellationDataset = "moden";
 
@@ -82,6 +82,7 @@ public class GetConstellationData : MonoBehaviour
 
 
         SelectedConstellationDataset = constellationName;
+        Debug.Log("datasetMap "+ SelectedConstellationDataset);
         drawContellation.SendMessage("UpdateConstellations");
 
 

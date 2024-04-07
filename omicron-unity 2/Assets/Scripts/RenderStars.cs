@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static omicron.EventBase;
 using static RenderStars;
 
 public class RenderStars : MonoBehaviour
@@ -18,8 +19,9 @@ public class RenderStars : MonoBehaviour
     public float maxDistance = 50f; 
     private float positionScale = 1.0f;
 
-    public GameObject starPrefab; 
-   
+    public GameObject starPrefab;
+
+    public Slider positionScaleSlider; // Reference to the Slider for position scale
 
     // List to store star data
     public List<StarData> starDataset = new List<StarData>();
@@ -82,6 +84,8 @@ public class RenderStars : MonoBehaviour
         initialPosition = userOrigin.transform.position;
         originalPosition = playerController.transform.position;
         originalOrientation = playerController.transform.rotation;
+        positionScaleSlider.onValueChanged.AddListener(delegate { SetPositionScale(positionScaleSlider.value); });
+
 
         // Raise the event to signal that stars are loaded
         if (StarsLoaded != null)
@@ -92,9 +96,32 @@ public class RenderStars : MonoBehaviour
         //Invoke("Starsvelocity", 2f);
     }
 
+    public void SetPositionScale(float scale)
+    {
+        positionScale = scale;
+        foreach (var star in loadedStars.Keys)
+        {
+            foreach (var starData in renderedStars)
+            {
+                if (starData.hip == star)
+                {
+                    Debug.Log("isStarted");
+                    //loadedStars[star].Move();
+                    if (loadedStars[star].activeSelf)
+                    {
+
+
+                        loadedStars[star].transform.position += (new Vector3(starData.vx, starData.vy, starData.vz) * Time.deltaTime);
+                    }
+
+                }
+            }
+        }
+    }
+
     //public void foreach (var star in loadedStars.Keys)
 
-     public void Starvelocity(string flag)
+    public void Starvelocity(string flag)
     {
          distanceInLightYears = distanceInLightYears + Time.deltaTime / 600;
         text.text = distanceInLightYears.ToString("F2") + " Light Years";
