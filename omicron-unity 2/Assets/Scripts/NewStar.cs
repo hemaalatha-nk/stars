@@ -15,7 +15,7 @@ public class NewStar : MonoBehaviour
     {
         initialPos = transform.position;
 
-        Invoke("MoveObject", 2f);
+        //Invoke("MoveObject", 2f);
 
         //transform.LookAt(transform.position + cameraTransform.rotation * Vector3.forward, cameraTransform.rotation * Vector3.up);
         Vector3 targetPosition = new Vector3(cameraTransform.position.x, transform.position.y, cameraTransform.position.z);
