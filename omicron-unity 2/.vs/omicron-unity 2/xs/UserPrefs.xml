@@ -1,18 +1,22 @@
-﻿<Properties>
+﻿<Properties StartupConfiguration="{6FA5972E-930D-1351-04F3-56CEA7E6F818}|Unit Tests">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RenderStars.cs">
     <Files>
       <File FileName="Assets/ObjectMover.cs" />
       <File FileName="Assets/Scripts/MovePlayer.cs" />
       <File FileName="Assets/module-omicron/Continuum/Scripts/StandaloneDisplayManager.cs" />
       <File FileName="Assets/Scripts/LoadStars.cs" />
-      <File FileName="Assets/Scripts/RenderStars.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/RenderStars.cs" Line="118" Column="31" />
       <File FileName="Assets/DistanceFromSolHandler.cs" />
-      <File FileName="Assets/Scripts/MoveSta.cs" />
-      <File FileName="Assets/Scripts/DrawContellation.cs" Line="40" Column="15" />
+      <File FileName="Assets/Scripts/MoveSta.cs" Line="50" Column="31" />
+      <File FileName="Assets/Scripts/DrawContellation.cs" />
       <File FileName="Assets/Scripts/GetConstellationData.cs" />
+      <File FileName="Assets/Scripts/NewStar.cs" Line="26" Column="39" />
+      <File FileName="Assets/Scripts/Newlol.cs" Line="31" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -36,7 +40,5 @@
     </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.ItemProperties.Assembly-CSharp-Editor PreferredExecutionTarget="MonoDevelop.Default" />
-  <MultiItemStartupConfigurations />
 </Properties>

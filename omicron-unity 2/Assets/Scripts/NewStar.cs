@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class MoveSta : MonoBehaviour
+public class NewStar : MonoBehaviour
 {
-
     public Vector3 velocity;
     public string flag = "start";
     public Vector3 initialPos;
@@ -29,7 +27,8 @@ public class MoveSta : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (flag == "start" || flag == "resume")
+        //transform.position += velocity * (Time.deltaTime / 600);
+        if (flag == "start"|| flag == "resume")
         {
             transform.position += velocity * (Time.deltaTime / 600);
         }
@@ -39,7 +38,7 @@ public class MoveSta : MonoBehaviour
             flag = "start";
             //Debug.Log("stop");
         }
-        else if (flag == "stop")
+        else if(flag == "stop")
         {
 
         }
@@ -49,6 +48,4 @@ public class MoveSta : MonoBehaviour
         }
 
     }
-
-
 }

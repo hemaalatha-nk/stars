@@ -1,11 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
-public class MoveSta : MonoBehaviour
+public class Newlol : MonoBehaviour
 {
-
     public Vector3 velocity;
     public string flag = "start";
     public Vector3 initialPos;
@@ -16,7 +14,6 @@ public class MoveSta : MonoBehaviour
     void Start()
     {
         initialPos = transform.position;
-
         Invoke("MoveObject", 2f);
 
         //transform.LookAt(transform.position + cameraTransform.rotation * Vector3.forward, cameraTransform.rotation * Vector3.up);
@@ -31,6 +28,7 @@ public class MoveSta : MonoBehaviour
     {
         if (flag == "start" || flag == "resume")
         {
+            Debug.Log("lol");
             transform.position += velocity * (Time.deltaTime / 600);
         }
         else if (flag == "reset")
@@ -49,6 +47,4 @@ public class MoveSta : MonoBehaviour
         }
 
     }
-
-
 }

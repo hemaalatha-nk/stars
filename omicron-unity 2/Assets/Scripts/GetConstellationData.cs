@@ -53,7 +53,7 @@ public class GetConstellationData : MonoBehaviour
         datasetMap.Add("indian", (GetLines(indianConstellationFile)));
         datasetMap.Add("egyptian", (GetLines(egyptianConstellationFile)));
         datasetMap.Add("chinese", (GetLines(chineseConstellationFile)));
-
+        SelectedConstellationDataset = "moden";
 
         buttonConst("modern");
 
