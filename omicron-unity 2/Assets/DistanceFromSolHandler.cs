@@ -11,7 +11,7 @@ public class DistanceFromSolHandler : MonoBehaviour
     private Vector3 originalPosition; // Original position of the GameObject
     //private float distanceFromSol;
     public string displayText = "Distance from sol is xxx parsecs";
-    public TMP_Text text;
+    public Text text;
     public TMP_Text distance_travel;
     public float updateInterval = 1f; // Set the delay in seconds
     float distanceInLightYears = 0;
@@ -38,10 +38,10 @@ public class DistanceFromSolHandler : MonoBehaviour
             // Calculate the distance between current position and original position
             float distance = Vector3.Distance(origin.position, originalPosition);
 
-            string[] parts = displayText.Split(new string[] { "xxx" }, StringSplitOptions.None);
+            //string[] parts = displayText.Split(new string[] { "xxx" }, StringSplitOptions.None);
           
 
-            string output = parts[0] + distance.ToString("F2") + parts[1];
+            string output = "Distance from the sun: " + distance.ToString("F2") + "sol";
             //Debug.Log(output);
             text.text = output;
            

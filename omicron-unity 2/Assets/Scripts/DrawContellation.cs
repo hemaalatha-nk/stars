@@ -107,7 +107,7 @@ public class DrawContellation : MonoBehaviour
     }
 
     // Clear existing constellations
-    void ClearConstellations()
+    public void ClearConstellations()
     {
         foreach (var pair in constellationLines)
         {
